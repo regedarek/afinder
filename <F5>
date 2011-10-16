@@ -1,0 +1,35 @@
+%b
+  Anagram Finder
+%br
+%br
+= form_for @add_dict, :html => {:multipart => true} do |f|
+  - if @add_dict.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@add_dict.errors.count, "error")
+        prohibited this att_dict from being saved:
+      %ul
+        - @att_dict.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.file_field :file
+  .actions
+    = f.submit "Load new dictionary"
+%br
+- if @add_dicts.present?
+  = @recent_dict.file
+%hr
+  enter a word to search for a anagrams
+= form_tag add_dicts_path, :method => 'get' do
+  %p
+    = text_field_tag :search, params[:search]
+    = submit_tag "Search", :name => nil
+- if params[:search].present?
+  - @recent_searches.each do |n|
+    %b
+      =n.created_at.strftime("%Y.%m.%d %I:%M:%S %p")
+    %br
+    =n.query + " " 
+    %br
+    %br
+=@page_request.page_duration

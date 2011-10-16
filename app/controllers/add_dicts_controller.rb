@@ -17,7 +17,7 @@ class AddDictsController < ApplicationController
       @anagram = anagrams(params[:search],@list).join(", ").to_s
       @ile = anagrams(params[:search],@list).count  
       if @ile < 1 
-      @search = Search.create!(:query => "0 anagrams found for " + params[:search])
+      @search = Search.create!(:query => "0 anagrams found for " + params[:search], :timing => @page_request_last.page_duration)
       else 
       @search = Search.create!(:query => @ile.to_s + " anagrams found for '" + params[:search] + "' > "  + @anagram, :timing => @page_request_last.page_duration )
       @timing
